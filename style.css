@@ -76,3 +76,71 @@ body {
   color: #fff;
   margin-top: 20px;
 }
+ 
+/* Parallax section */
+.parallax {
+  background-image: url("images/bg1.jpg"); /* ganti sesuai gambar kamu */
+  min-height: 200px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+/* Parallax umum */
+.parallax {
+  min-height: 200px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+
+/* Parallax khusus */
+.parallax-header {
+  background-image: url("images/bg1.jpg");
+}
+
+}
+
+.parallax-footer {
+  background-image: url("images/bg1.jpg");
+  min-height: 300px;
+}
+ /* Kontainer footer */
+.contact-footer {
+  text-align: center;
+}
+
+/* Ikon sosmed */
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons a {
+  color: white;
+  margin: 0 15px;
+  font-size: 2em;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ffcc00;
+}
