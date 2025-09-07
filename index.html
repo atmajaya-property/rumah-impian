@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Properti Impian — Jual Beli Rumah & Tanah</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>🏠 ATMAJAYA PROPERTY</h1>
+      <nav>
+        <a href="https://wa.me/6281249995055" target="_blank">WhatsApp</a>
+        <a href="mailto:onogeprek@gmail.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Filter -->
+  <section class="filters container">
+    <input type="search" id="q" placeholder="Cari (misal: Jakarta, Rumah)">
+    <select id="tipe">
+      <option value="">Semua Tipe</option>
+      <option>Rumah</option>
+      <option>Tanah</option>
+      <option>Ruko</option>
+    </select>
+    <select id="lokasi">
+      <option value="">Semua Lokasi</option>
+      <option>Jakarta</option>
+      <option>Bandung</option>
+      <option>Surabaya</option>
+    </select>
+    <input type="number" id="min" placeholder="Harga min (jt)">
+    <input type="number" id="max" placeholder="Harga max (jt)">
+    <button id="reset">Reset</button>
+  </section>
+
+  <main class="container">
+    <h2>Daftar Properti</h2>
+    <div id="grid" class="card-grid">
+      
+      <!-- Properti 1 -->
+      <article class="card" data-tipe="Rumah" data-lokasi="Jakarta" data-harga="1250">
+        <img src="images/3lantai.jpg" alt="Rumah minimalis 2 lantai di Jakarta">
+        <h3>Rumah Minimalis 2 Lantai</h3>
+        <p>Lokasi: Jakarta</p>
+	<p>Rute :<a href="https://maps.app.goo.gl/9DHpZBea1k34tWhg8">patung lele><a/> </p>
+        <p class="price">Rp 1,25 M</p>
+        <a href="https://wa.me/6281249995055?text=Minat Rumah Jakarta" target="_blank" class="btn">Hubungi</a>
+      </article>
+
+      <!-- Properti 2 -->
+      <article class="card" data-tipe="Tanah" data-lokasi="Bandung" data-harga="480">
+        <img src="images/gbr4.jpg" alt="Tanah kavling Bandung">
+        <h3>Tanah Kavling Bandung</h3>
+        <p>Lokasi: Bandung</p>
+	<p>Rute :<a href="https://maps.app.goo.gl/UhEboqq6cwtL7Yp99">rth maron><a/> </p>
+        <p class="price">Rp 480 jt</p>
+        <a href="https://wa.me/6281249995055?text=Minat Tanah Bandung" target="_blank" class="btn">Hubungi</a>
+      </article>
+
+      <!-- Properti 3 -->
+      <article class="card" data-tipe="Ruko" data-lokasi="Surabaya" data-harga="950">
+        <img src="images/gbr3.jpg" alt="Ruko strategis Surabaya">
+        <h3>Ruko Strategis</h3>
+        <p>Lokasi: Surabaya</p>
+	<p>Rute :<a href="https://maps.app.goo.gl/8kXGhenbc8YKZ4N77">desa jambwangi><a/> </p>
+        <p class="price">Rp 950 jt</p>
+        <a href="https://wa.me/6281249995055?text=Minat Ruko Surabaya" target="_blank" class="btn">Hubungi</a>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Properti Impian</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
