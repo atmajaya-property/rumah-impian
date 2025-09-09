@@ -20,32 +20,98 @@
 
   <!-- Filter -->
   <section class="filters">
-    <button class="filter-btn" onclick="filterProperties('all')">Semua</button>
-    <button class="filter-btn" onclick="filterProperties('rumah')">Rumah</button>
-    <button class="filter-btn" onclick="filterProperties('ruko')">Ruko</button>
-    <button class="filter-btn" onclick="filterProperties('tanah')">Tanah</button>
+    <button class="filter-btn" onclick="filterProperties('all, event')">Semua</button>
+    <button class="filter-btn" onclick="filterProperties('rumah, event')">Rumah</button>
+    <button class="filter-btn" onclick="filterProperties('ruko, event')">Ruko</button>
+    <button class="filter-btn" onclick="filterProperties('tanah, event')">Tanah</button>
   </section>
 
-  <!-- Daftar Properti -->
-  <section class="properties">
-    <div class="property-card rumah">
-      <img src="images/rumah1.jpg" alt="Rumah Jakarta">
-      <h3>Rumah Minimalis Jakarta</h3>
-      <p>Harga: Rp 500 juta</p>
-    </div>
+<!-- Filter Lokasi -->
+<section class="filters">
+  <label for="lokasi">Pilih Kecamatan:</label>
+  <select id="lokasi" onchange="filterProperties()">
+    <option value="all">Semua Kecamatan</option>
+    <option value="banyuwangi">Banyuwangi</option>
+    <option value="glagah">Glagah</option>
+    <option value="giri">Giri</option>
+    <option value="kalipuro">Kalipuro</option>
+    <option value="wongsorejo">Wongsorejo</option>
+    <option value="singojuruh">Singojuruh</option>
+    <option value="rogojampi">Rogojampi</option>
+    <option value="kabat">Kabat</option>
+    <option value="cluring">Cluring</option>
+    <option value="gambiran">Gambiran</option>
+    <option value="genteng">Genteng</option>
+    <option value="glenmore">Glenmore</option>
+    <option value="kalibaru">Kalibaru</option>
+    <option value="pesanggaran">Pesanggaran</option>
+    <option value="purwoharjo">Purwoharjo</option>
+    <option value="siliragung">Siliragung</option>
+    <option value="tegaldlimo">Tegaldlimo</option>
+    <option value="tegalsari">Tegalsari</option>
+    <option value="licin">Licin</option>
+    <option value="songgon">Songgon</option>
+    <option value="muncar">Muncar</option>
+    <option value="srono">Srono</option>
+    <option value="sempu">Sempu</option>
+    <option value="bangorejo">Bangorejo</option>
+  </select>
+</section>
 
-    <div class="property-card ruko">
-      <img src="images/ruko1.jpg" alt="Ruko Surabaya">
-      <h3>Ruko Strategis Surabaya</h3>
-      <p>Harga: Rp 1,2 miliar</p>
-    </div>
 
-    <div class="property-card tanah">
-      <img src="images/tanah1.jpg" alt="Tanah Bandung">
-      <h3>Tanah Luas Bandung</h3>
-      <p>Harga: Rp 800 juta</p>
-    </div>
-  </section>
+  <script>
+const sheetURL = "<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQBZ9bxMMmEfwqjiG4tugQ4BbGmM8oAbZA6Ygi8gwKnS5AZdieHy-q5QbQxaamttAwLBW6FHxOabK1V/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>"; // ganti dengan link CSV Google Sheets
+let allData = [];
+
+// Load data dari Google Sheets
+async function loadPropertiesFromSheet() {
+  const response = await fetch(sheetURL);
+  const data = await response.text();
+  const rows = data.split("\n").slice(1); // skip header
+  allData = [];
+
+  rows.forEach(row => {
+    const [title, price, image, category, location] = row.split(",");
+    if (title) {
+      allData.push({ title, price, image, category, location });
+    }
+  });
+
+  renderProperties(allData);
+}
+
+// Render data ke dalam HTML (pakai class sesuai rancangan lama)
+function renderProperties(data) {
+  const container = document.querySelector(".properties");
+  container.innerHTML = "";
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="property-card ${item.category} ${item.location}">
+        <img src="${item.image}" alt="${item.title}">
+        <h3>${item.title}</h3>
+        <p>Harga: ${item.price}</p>
+        <p>Lokasi: ${item.location}</p>
+      </div>
+    `;
+  });
+}
+
+// Filter kategori & lokasi
+function filterProperties(filter, e) {
+  document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+  e.target.classList.add("active");
+
+  const filtered = filter === "all" 
+    ? allData 
+    : allData.filter(item => item.category === filter || item.location === filter);
+
+  renderProperties(filtered);
+}
+
+// Jalankan load pertama
+loadPropertiesFromSheet();
+</script>
+
 
   <!-- Footer Parallax -->
   <section class="parallax parallax2">
@@ -64,14 +130,54 @@
 
   <!-- Script Filter -->
   <script>
-    function filterProperties(category) {
-      let cards = document.querySelectorAll('.property-card');
+function filterProperties(category = null) {
+  let cards = document.querySelectorAll('.property-card');
+  let buttons = document.querySelectorAll('.filter-btn');
+  let lokasi = document.getElementById('lokasi').value;
+
+  // reset tombol kategori jika ada klik baru
+  if (event && event.target.classList.contains('filter-btn')) {
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  cards.forEach(card => {
+    let matchCategory = true;
+    let matchLocation = true;
+
+    // cek kategori
+    if (category && category !== 'all') {
+      matchCategory = card.classList.contains(category);
+    }
+
+    // cek lokasi
+    if (lokasi && lokasi !== 'all') {
+      matchLocation = card.classList.contains(lokasi);
+    }
+
+    // tampilkan hanya jika cocok dua-duanya
+    if (matchCategory && matchLocation) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+	
+
+  // reset semua tombol
+  buttons.forEach(btn => btn.classList.remove('active'));
+
+  // tandai tombol aktif
+  event.target.classList.add('active');	
       cards.forEach(card => {
         if (category === 'all') {
           card.style.display = 'block';
         } else {
           if (card.classList.contains(category)) {
             card.style.display = 'block';
+	    
           } else {
             card.style.display = 'none';
           }

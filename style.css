@@ -22,11 +22,11 @@
 }
 
 .parallax1 {
-  background-image: url("images/rumah1.jpg");
+  background-image: url("images/bg1.jpg");
 }
 
 .parallax2 {
-  background-image: url("images/rumah2.jpg");
+  background-image: url("images/bg1.jpg");
 }
 
 .overlay {
@@ -54,7 +54,13 @@
 
 .filter-btn:hover {
   background: #005fa3;
+	
 }
+
+.filter-btn.active {
+  background: red;
+}
+
 
 /* Property Cards */
 .properties {
@@ -66,7 +72,7 @@
 }
 
 .property-card {
-  width: 250px;
+  width: 350px;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
@@ -78,6 +84,7 @@
 
 .property-card:hover {
   transform: scale(1.05);
+
 }
 
 .property-card img {
