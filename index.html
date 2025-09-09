@@ -58,61 +58,9 @@
   </select>
 </section>
 
-
-  <script>
-const sheetURL = "<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQBZ9bxMMmEfwqjiG4tugQ4BbGmM8oAbZA6Ygi8gwKnS5AZdieHy-q5QbQxaamttAwLBW6FHxOabK1V/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>"; // ganti dengan link CSV Google Sheets
-let allData = [];
-
-// Load data dari Google Sheets
-async function loadPropertiesFromSheet() {
-  const response = await fetch(sheetURL);
-  const data = await response.text();
-  const rows = data.split("\n").slice(1); // skip header
-  allData = [];
-
-  rows.forEach(row => {
-    const [title, price, image, category, location] = row.split(",");
-    if (title) {
-      allData.push({ title, price, image, category, location });
-    }
-  });
-
-  renderProperties(allData);
-}
-
-// Render data ke dalam HTML (pakai class sesuai rancangan lama)
-function renderProperties(data) {
-  const container = document.querySelector(".properties");
-  container.innerHTML = "";
-  data.forEach(item => {
-    container.innerHTML += `
-      <div class="property-card ${item.category} ${item.location}">
-        <img src="${item.image}" alt="${item.title}">
-        <h3>${item.title}</h3>
-        <p>Harga: ${item.price}</p>
-        <p>Lokasi: ${item.location}</p>
-      </div>
-    `;
-  });
-}
-
-// Filter kategori & lokasi
-function filterProperties(filter, e) {
-  document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
-  e.target.classList.add("active");
-
-  const filtered = filter === "all" 
-    ? allData 
-    : allData.filter(item => item.category === filter || item.location === filter);
-
-  renderProperties(filtered);
-}
-
-// Jalankan load pertama
-loadPropertiesFromSheet();
-</script>
-
-
+<!-- DAFTAR PROPERTI -->
+<section class="properties"></section>
+  
   <!-- Footer Parallax -->
   <section class="parallax parallax2">
     <div class="overlay">
@@ -166,24 +114,60 @@ function filterProperties(category = null) {
 </script>
 	
 
-  // reset semua tombol
-  buttons.forEach(btn => btn.classList.remove('active'));
+ <!-- SCRIPT: Load data dari Google Sheets -->
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/1io4sT-khAjeAB7OCprlZTkf0ozrgjzECWl8cJR3VDlk/edit?usp=sharing"; // ganti dengan link CSV dari Google Sheets
+let allData = [];
 
-  // tandai tombol aktif
-  event.target.classList.add('active');	
-      cards.forEach(card => {
-        if (category === 'all') {
-          card.style.display = 'block';
-        } else {
-          if (card.classList.contains(category)) {
-            card.style.display = 'block';
-	    
-          } else {
-            card.style.display = 'none';
-          }
-        }
-      });
+// Ambil data dari Google Sheets
+async function loadPropertiesFromSheet() {
+  const response = await fetch(sheetURL);
+  const data = await response.text();
+  const rows = data.split("\n").slice(1); // skip header
+  allData = [];
+
+  rows.forEach(row => {
+    const [title, price, image, category, location] = row.split(",");
+    if (title) {
+      allData.push({ title, price, image, category, location });
     }
-  </script>
+  });
+
+  renderProperties(allData);
+}
+
+// Render data ke HTML
+function renderProperties(data) {
+  const container = document.querySelector(".properties");
+  container.innerHTML = "";
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="property-card ${item.category} ${item.location}">
+        <img src="${item.image}" alt="${item.title}">
+        <h3>${item.title}</h3>
+        <p>Harga: ${item.price}</p>
+        <p>Lokasi: ${item.location}</p>
+      </div>
+    `;
+  });
+}
+
+// Filter kategori / lokasi
+function filterProperties(filter, e) {
+  document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+  e.target.classList.add("active");
+
+  const filtered = filter === "all" 
+    ? allData 
+    : allData.filter(item => item.category === filter || item.location === filter);
+
+  renderProperties(filtered);
+}
+
+// Load awal
+loadPropertiesFromSheet();
+</script>
+
+
 </body>
 </html>
